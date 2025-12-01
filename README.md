@@ -1,157 +1,309 @@
-📊 Twitter & Reddit Sentiment Analysis Using PySpark
-An End-to-End Pipeline for Social Media Text Classification
+# 📊 Twitter & Reddit Sentiment Analysis Using PySpark
+
+### *An End-to-End Pipeline for Social Media Text Classification*
+
+**Author:** Bob Philip\
+**Institution:** African Institute for Mathematical Sciences
+(AIMS--Rwanda)\
+**Supervisor:** Dr. Lema Logamou\
+**Date:** November 28, 2025
+
+------------------------------------------------------------------------
+
+## 📌 Overview
+
+This project implements a full **PySpark sentiment analysis pipeline**
+on a combined dataset from **Twitter** and **Reddit**, totaling over
+**230K messages**.\
+The classifier predicts:
+
+-   **Positive (1)**
+-   **Neutral (0)**
+-   **Negative (-1)**
+
+The final model achieved **≈ 81% accuracy** using Logistic Regression.
+
+------------------------------------------------------------------------
+
+## 📁 Repository Structure
+
+```{=html}
+<details>
+```
+```{=html}
+<summary>
+```
+`<strong>`{=html}Click to expand`</strong>`{=html}
+```{=html}
+</summary>
+```
+    ├── images/
+    │   ├── figure1.png
+    │   ├── figure2.png
+    │   ├── figure3.png
+    │   ├── figure4.png
+    │   ├── figure5.png
+    │   ├── figure6.png
+    │   ├── figure7.png
+    │   ├── figure8.png
+    │   ├── figure9.png
+    │   ├── figure10.png
+    │
+    ├── Sentimental_Analysis_Presentation.pdf
+    ├── src/
+    │   ├── cleaning_pipeline.py
+    │   ├── train.py
+    │   ├── evaluate.py
+    │   ├── twitter_stream.py
+    │
+    ├── requirements.txt
+    └── README.md
+
+```{=html}
+</details>
+```
+
+------------------------------------------------------------------------
+
+## 1️⃣ Introduction & Motivation
+
+```{=html}
+<details>
+```
+```{=html}
+<summary>
+```
+`<strong>`{=html}Click to expand`</strong>`{=html}
+```{=html}
+</summary>
+```
+Social media platforms like **Twitter** and **Reddit** generate millions
+of opinions every day.\
+Analyzing this sentiment is helpful for:
 
-Author: Bob Philip
-Institution: African Institute for Mathematical Sciences (AIMS–Rwanda)
-Supervisor: Dr. Lema Logamou
-Date: November 28, 2025
+-   Market research\
+-   Political analytics\
+-   Crisis management\
+-   Trend detection
 
-📌 Overview
+### 🎯 Target Classification
 
-This project builds a complete PySpark-based sentiment analysis pipeline for large social-media text datasets collected from Twitter and Reddit.
-It classifies messages into:
+![Figure 1](images/figure1.png)
 
-Positive (1)
+```{=html}
+</details>
+```
 
-Neutral (0)
+------------------------------------------------------------------------
 
-Negative (-1)
+## 2️⃣ Data Exploration & Preparation
 
-The final model achieves ~81% accuracy using Logistic Regression on TF-IDF features.
+```{=html}
+<details>
+```
+```{=html}
+<summary>
+```
+`<strong>`{=html}Click to expand`</strong>`{=html}
+```{=html}
+</summary>
+```
+### 📊 Dataset Summary
 
-🎯 Project Goals
+-   **230,436** raw messages collected\
+-   **34,755** invalid/null labels removed\
+-   **195,323** clean rows used for training
 
-Process and analyze 230K+ text records from social platforms
+### 🔢 Label Distribution
 
-Build a scalable text-cleaning and feature-engineering pipeline
+![Figure 2](images/figure2.png)
 
-Train ML models on TF-IDF features
+### ✉️ Message Length Distribution
 
-Evaluate and compare classifiers
+![Figure 3](images/figure3.png)
 
-Visualize insights via word clouds and distribution plots
+------------------------------------------------------------------------
 
-Deploy real-time sentiment classification using Tweepy
+### 🧹 PySpark Cleaning Pipeline
 
-📁 Repository Structure
-├── images/
-│   ├── figure1.png
-│   ├── figure2.png
-│   ├── figure3.png
-│   ├── ...
-│
-├── Sentimental_Analysis_Presentation.pdf
-├── src/
-│   ├── cleaning_pipeline.py
-│   ├── train.py
-│   ├── evaluate.py
-│   ├── stream_twitter.py
-│
-├── requirements.txt
-└── README.md
+![Figure 4](images/figure4.png)
 
-📝 Project Summary (Based on Presentation)
-1️⃣ Introduction & Motivation
+Pipeline steps:
 
-Millions of opinions are posted daily on Twitter and Reddit, making manual monitoring impossible.
+-   Lowercasing\
+-   Removing URLs\
+-   Removing HTML tags\
+-   Removing @mentions\
+-   Removing punctuation\
+-   Dropping null labels
 
-Why sentiment analysis?
+### 📦 Final Dataset
 
-📈 Market Research: Understand public opinion
+![Figure 5](images/figure5.png)
 
-🏛 Political Analysis: Gauge support levels
+```{=html}
+</details>
+```
 
-🚨 Crisis Response: Detect negative trends early
+------------------------------------------------------------------------
 
-2️⃣ Data Exploration & Preparation
-Dataset Size
+## 3️⃣ Feature Engineering
 
-230,436 raw records
+```{=html}
+<details>
+```
+```{=html}
+<summary>
+```
+`<strong>`{=html}Click to expand`</strong>`{=html}
+```{=html}
+</summary>
+```
+### 🔠 TF-IDF Pipeline
 
-Removed 34,755 invalid entries
+![Figure 7](images/figure7.png)
 
-Final clean dataset: 195,323 rows
+**Steps used:**
 
-Label Distribution
+1.  Tokenization\
+2.  Stopword removal\
+3.  CountVectorizer\
+4.  IDF weighting
 
-Message Length Analysis
+------------------------------------------------------------------------
 
-3️⃣ PySpark Cleaning Pipeline
+### ☁️ Word Clouds
 
-Cleaning operations:
+#### Raw Word Cloud
 
-Lowercasing
+![Figure 6](images/figure6.png)
 
-Removing URLs, HTML tags, punctuation
+#### Positive Messages
 
-Removing @mentions
+![Figure 8](images/figure8.png)
 
-Dropping null labels
+#### Negative Messages
 
-Result: Clean, scalable dataset ready for NLP.
+![Figure 9](images/figure9.png)
 
-4️⃣ Feature Engineering (TF-IDF)
+```{=html}
+</details>
+```
 
-Steps:
+------------------------------------------------------------------------
 
-Tokenization
+## 4️⃣ Model Training & Evaluation
 
-StopWord removal
+```{=html}
+<details>
+```
+```{=html}
+<summary>
+```
+`<strong>`{=html}Click to expand`</strong>`{=html}
+```{=html}
+</summary>
+```
+### 🤖 Models Trained
 
-CountVectorizer → TF
+-   Logistic Regression\
+-   Naive Bayes\
+-   Random Forest
 
-IDF transformation
+### 📈 Performance Results
 
-5️⃣ Text Visualization
-Raw Word Cloud
+  Model                     Accuracy     F1 Score
+  ------------------------- ------------ ------------
+  **Logistic Regression**   **0.8103**   **0.8101**
+  Naive Bayes               0.7003       0.7032
+  Random Forest             0.4464       0.2758
 
-Positive Word Cloud
+**Best Model:** Logistic Regression
 
-Negative Word Cloud
+```{=html}
+</details>
+```
 
-6️⃣ Model Training & Evaluation
-Trained Models
+------------------------------------------------------------------------
 
-Logistic Regression
+## 5️⃣ Deployment: Real-Time Twitter Streaming
 
-Naive Bayes
+```{=html}
+<details>
+```
+```{=html}
+<summary>
+```
+`<strong>`{=html}Click to expand`</strong>`{=html}
+```{=html}
+</summary>
+```
+This project includes integration with **Tweepy** to classify tweets in
+real time as they are streamed.
 
-Random Forest
+### 🔗 Live App
 
-Performance (Test Set)
-Model	Accuracy	F1 Score
-Logistic Regression	0.8103	0.8101
-Naive Bayes	0.7003	0.7032
-Random Forest	0.4464	0.2758
+👉
+https://00cc8358-d0e5-4992-b27d-90e2463817eb-00-1ggm5un9s27rk.worf.replit.dev/
 
-📌 Logistic Regression performed best and is used in the deployed system.
+### PySpark Features
 
-7️⃣ Real-Time Twitter Streaming
+![Figure 10](images/figure10.png)
 
-Integrated with Tweepy to fetch live tweets and classify them automatically.
+```{=html}
+</details>
+```
 
-🔗 Live App Link
+------------------------------------------------------------------------
 
-👉 https://00cc8358-d0e5-4992-b27d-90e2463817eb-00-1ggm5un9s27rk.worf.replit.dev/
+## 6️⃣ Key Takeaways
 
-🎯 Key Takeaways
+```{=html}
+<details>
+```
+```{=html}
+<summary>
+```
+`<strong>`{=html}Click to expand`</strong>`{=html}
+```{=html}
+</summary>
+```
+-   Achieved **81% accuracy** using Logistic Regression\
+-   PySpark efficiently handled large datasets\
+-   TF-IDF and strong cleaning improved performance\
+-   Word clouds validated sentiment-based vocabulary\
+-   The system supports **real-time predictions**
 
-Achieved 81% accuracy with Logistic Regression
+```{=html}
+</details>
+```
 
-PySpark enabled fast processing of large text datasets
+------------------------------------------------------------------------
 
-Proper data cleaning & TF-IDF feature extraction is crucial
+## 7️⃣ Future Work
 
-Word clouds validated the vocabulary associated with each sentiment
+```{=html}
+<details>
+```
+```{=html}
+<summary>
+```
+`<strong>`{=html}Click to expand`</strong>`{=html}
+```{=html}
+</summary>
+```
+-   Hyperparameter tuning (GridSearchCV)\
+-   Word2Vec / GloVe / BERT embeddings\
+-   Deep learning models\
+-   Real-time dashboard\
+-   Multi-language sentiment support
 
-The pipeline supports real-time classification
+```{=html}
+</details>
+```
 
-🚀 Future Improvements
+------------------------------------------------------------------------
 
-Hyperparameter tuning (cross-validation)
+## 📜 License
 
-Integration of Word2Vec, GloVe, or BERT
-
-More advanced deep learning approaches
-
-Better deployment + dashboard
+This project is licensed under the **MIT License**.
