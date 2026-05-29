@@ -244,7 +244,7 @@ real time as they are streamed.
 ### 🔗 Live App
 
 👉
-https://00cc8358-d0e5-4992-b27d-90e2463817eb-00-1ggm5un9s27rk.worf.replit.dev/
+[Tweetsence Live App/](https://tweetsense--bobphilip.replit.app)
 
 ### PySpark Features
 
